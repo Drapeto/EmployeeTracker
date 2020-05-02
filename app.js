@@ -26,8 +26,8 @@ function startup() {
         name: "task",
         message: "Please make a selection.",
         choices: ["Add Department", "Add Role",
-            "Add Employee", , "View Department", "View Roles",
-            "View Employees", "Update Employee role" ]
+            "Add Employee", , "View Department", "View Role",
+            "View Employee", "Update Employee role"]
         }
     ])
     .then(answers => {
@@ -40,11 +40,11 @@ function startup() {
                 break;
             case "View Department": viewDepartment();
                 break;
-            case "View Roles": viewRoles();
+            case "View Role": viewRole();
                 break;
-            case "View Employees": viewEmployees();
+            case "View Employee": viewEmployee();
                 break;
-            case "Update Employee Roles": viewEmployeeRolesDepartment();
+            case "Update Employee Role": viewEmployeeRoleDepartment();
                 break;
             default: console.table("")         
         }
@@ -59,7 +59,7 @@ function addDepartment() {
             {
             type: "input",
             name: "department",
-            message: "What is your Department?"
+            message: "What department?"
             }
         ])
         .then(answers => {
@@ -77,39 +77,41 @@ function viewDepartment(){
 
 };
 
-// function addRole() {
-//     connection.query('SELECT * FROM department', function (err, result) {
-//         let deptNames = [];
-//         inquirer.prompt(
-//             {
-//                 type: "input",
-//                 name: "role",
-//                 message: "What is your role title?"
-//             },
-//             {
-//                 type: "input",
-//                 name: "salary",
-//                 message: "Input your Salary"
-//             },
-//             {
-//                 type: "list",
-//                 name: "dept",
-//                 message: "Choose a dept",
-//                 choices: deptNames
-//             }
+function addRole() {
+    connection.query('SELECT * FROM department', function (err, result) {
+        let deptNames = [];
+        inquirer.prompt(
+            {
+                type: "input",
+                name: "role",
+                message: "What title?"
+            },
+            {
+                type: "input",
+                name: "salary",
+                message: "What is the salary amount?"
+            },
+            {
+                type: "list",
+                name: "dept",
+                message: "Choose a dept",
+                choices: deptNames
+            }
 
-//         )
-//     })
-//         .then(answers => {
-//         console.query(answers);
-//         connection.query("SELECT department (id) FROM department WHERE name = ?"[answers.dept]), (err, data) => {
-//             const dept = data[0]['departmentId)'];
-//             connection.query("INSERT INTO role (departmentId) VALUES (?)", [dept]);
-//         }
-//         connection.query("INSERT INTO role (title, salary) VALUES (?)"[answers.title, answers, salary]);
-//         console.log(answers);
-//     })
-// };
+        )
+    })
+        .then(answers => {
+        console.query(answers);
+        connection.query("SELECT department (id) FROM department WHERE name = ?"[answers.dept]), (err, data) =>{
+            const dept = data[0]['department_Id)'];
+            connection.query("INSERT INTO role (department_Id) VALUES (?)", [dept]);
+        }
+        connection.query("INSERT INTO role (title, salary) VALUES (?)"[answers.title, answers.salary]);
+        console.log(answers);
+        startup();
+    })
+};
+
 connection.connect(function (err) {
     if (err) throw err;
     console.log("connected as id " + connection.threadId);

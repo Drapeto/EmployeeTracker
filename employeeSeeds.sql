@@ -9,13 +9,13 @@ CREATE TABLE department(
     PRIMARY KEY (id)
 );
 
-CREATE TABLE roles(
+CREATE TABLE role(
     id INT NOT NULL AUTO_INCREMENT,
     title VARCHAR(30) NULL,
-    salary DECIMAL(30) NULL,
-    departmentid INT NULL,
+    salary DECIMAL NULL,
+    department_id INT NULL,
     PRIMARY KEY (id),
-    FOREIGN KEY(departmentid) REFERENCES department(id)
+    FOREIGN KEY(department_id) REFERENCES department(id)
 );
 
 CREATE TABLE employee(
@@ -25,6 +25,12 @@ CREATE TABLE employee(
   role_id INT NULL,
   manager_id INT NULL,
   PRIMARY KEY (id),
-  FOREIGN KEY(role_id) REFERENCES roles(id)
+  FOREIGN KEY(role_id) REFERENCES role(id)
   
 );
+
+INSERT INTO department(name)
+VALUES ('IT');
+
+INSERT INTO role(title)
+VALUES ('Engineer');
